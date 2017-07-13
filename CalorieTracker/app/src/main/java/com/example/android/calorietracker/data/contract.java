@@ -14,7 +14,7 @@ private contract(){}
 
        public static final String table_name="calories";
         public static final String _ID=BaseColumns._ID;
-        public static final String FOOD="food name";
+        public static final String FOOD="food_name";
         public static final String CALORIE="calories";
     }
 

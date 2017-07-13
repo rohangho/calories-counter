@@ -1,0 +1,1 @@
+This app is a calorie tracker app. It enables to keep a track of calorie you had consumed
