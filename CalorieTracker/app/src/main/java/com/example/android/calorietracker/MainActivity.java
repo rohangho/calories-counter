@@ -34,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        cursor();
+        display();
     }
-
-    private void cursor() {
+    private Cursor cur(){
         SQLiteDatabase db = mdbhelper.getReadableDatabase();
         String[] projection = {
                 entry._ID,
@@ -45,26 +44,32 @@ public class MainActivity extends AppCompatActivity {
                 entry.CALORIE
         };
         Cursor cursor = db.query(entry.table_name, projection, null, null, null, null, null);
+
+        return cursor;
+    }
+    //cur represent the cursor
+    private void display() {
+        Cursor cur=cur();
         TextView displayView = (TextView) findViewById(R.id.textview);
         try {
-            displayView.setText("The  table contain " + cursor.getCount() + "food.\n\n");
+            displayView.setText("The  table contain " + cur.getCount() + "food.\n\n");
             displayView.append(contract.entry._ID + "-" +
                     contract.entry.FOOD + "-" +
                     contract.entry.CALORIE + "-" + "\n");
-            int idColumnIndex = cursor.getColumnIndex(contract.entry._ID);
-            int nameColumnIndex = cursor.getColumnIndex(contract.entry.FOOD);
-            int calColumnIndex = cursor.getColumnIndex(contract.entry.CALORIE);
-            while (cursor.moveToNext()) {
-                int currentID = cursor.getInt(idColumnIndex);
-                String currentName = cursor.getString(nameColumnIndex);
-                String currentcal = cursor.getString(calColumnIndex);
+            int idColumnIndex = cur.getColumnIndex(contract.entry._ID);
+            int nameColumnIndex = cur.getColumnIndex(contract.entry.FOOD);
+            int calColumnIndex = cur.getColumnIndex(contract.entry.CALORIE);
+            while (cur().moveToNext()) {
+                int currentID = cur.getInt(idColumnIndex);
+                String currentName = cur.getString(nameColumnIndex);
+                String currentcal = cur.getString(calColumnIndex);
 
                 displayView.append(("\n" + currentID + " - " +" - " + currentName + currentcal));
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
-            cursor.close();
+            cur.close();
         }
     }
     private void insert() {
