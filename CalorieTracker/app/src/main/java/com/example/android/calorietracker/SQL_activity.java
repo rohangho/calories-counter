@@ -23,20 +23,20 @@ public class SQL_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sql_activity);
 
-        foodname=(EditText)findViewById(R.id.foodname);
-        calories_in=(EditText)findViewById(R.id.calorie);
+        foodname = (EditText) findViewById(R.id.foodname);
+        calories_in = (EditText) findViewById(R.id.calorie);
     }
 
-    private void insert(){
-        String namestring=foodname.getText().toString().trim();
-        String calstring=calories_in.getText().toString().trim();
-        int c=Integer.parseInt(calstring);
+    private void insert() {
+        String namestring = foodname.getText().toString().trim();
+        String calstring = calories_in.getText().toString().trim();
+        int c = Integer.parseInt(calstring);
 
         helper mDbHelper = new helper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(contract.entry.FOOD, namestring);
-        values.put(contract.entry.CALORIE,c);
+        values.put(contract.entry.CALORIE, c);
         long newRowId = db.insert(contract.entry.table_name, null, values);
 
         if (newRowId == -1) {
@@ -48,7 +48,7 @@ public class SQL_activity extends AppCompatActivity {
         }
     }
 
-    public boolean save(View view){
+    public boolean save(View view) {
         insert();
         finish();
         return true;
